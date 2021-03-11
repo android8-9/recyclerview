@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 
@@ -34,8 +35,16 @@ public class MainActivity extends AppCompatActivity {
         al.add(new User(R.drawable.twitty,"Twitty","343434343434"));
 
         UserAdapter adapter = new UserAdapter(this,al);
-        binding.rv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        //binding.rv.setLayoutManager(new GridLayoutManager(this,3));
+        //binding.rv.setLayoutManager(new LinearLayoutManager(this));
+        binding.rv.setLayoutManager(new GridLayoutManager(this,3));
         binding.rv.setAdapter(adapter);
+        adapter.setOnClickListener(new UserAdapter.OnRecyclerClick() {
+            @Override
+            public void onItemClick(User user, int position) {
+                Intent in = new Intent(MainActivity.this,ShowImageActivity.class);
+                in.putExtra("image",user.getImageId());
+                startActivity(in);
+            }
+        });
     }
 }
